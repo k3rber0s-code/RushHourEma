@@ -1,0 +1,6 @@
+﻿MAP_DEFINITION_START
+name=ChillaxSS
+size=5
+walls=0,1,2,3,4
+cars=12,1,2,1;9,2,1,0
+MAP_DEFINITION_END
