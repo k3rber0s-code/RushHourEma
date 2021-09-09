@@ -84,8 +84,8 @@ namespace RushHourEma
             //{
             //    return false;
             //}
-            //xPos = goalXPos;
-            //yPos = goalYPos;
+            xPos = goalXPos;
+            yPos = goalYPos;
             //isOnGoal = map.goals.Find(x => x.xPos == xPos && x.yPos == yPos) != null;
             //map.OnEntityMoved(this.id, this.xPos, this.yPos);
             return true;

@@ -11,6 +11,7 @@ namespace RushHourEma
         void setvalue(int v);
         void GetCarFromID(string id);
         void AddCars();
+        void MoveCar(Direction direction);
         List<Car> ReturnCars();
     }
 }

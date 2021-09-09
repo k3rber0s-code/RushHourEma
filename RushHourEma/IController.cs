@@ -12,6 +12,6 @@ namespace RushHourEma
         void ChangeValue();
         void StartGame();
         void SelectCar(string id);
-        void KeyPressed(KeyPressEventArgs e);
+        void KeyPressed(object sender, KeyPressEventArgs e);
     }
 }

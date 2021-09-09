@@ -102,20 +102,11 @@ namespace RushHourEma
             // BackgroundImage = Resources.background;
             BackgroundImageLayout = ImageLayout.Tile;
             game = new Game();
-            this.KeyPress += Form1_KeyPress;
-
+            this.KeyPress += controller.KeyPressed;
 
             //ShowHelp();
         }
 
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 'w')
-            {
-                MessageBox.Show("HELLO");
-            }
-            controller.KeyPressed(e);
-        }
 
         public void valueIncremented(IModel m, ModelEventArgs e)
         {
@@ -134,6 +125,10 @@ namespace RushHourEma
                 AddEntity(car, false);
             }
          
+        }
+        public void carMoved(IModel m, ModelEventArgs e)
+        {
+            selectedPictureBox.Location = new Point(e.newLocation.X*SquareSize, e.newLocation.Y * SquareSize);
         }
     }
 }

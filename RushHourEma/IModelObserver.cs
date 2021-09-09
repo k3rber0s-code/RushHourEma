@@ -9,6 +9,7 @@
         void valueIncremented(IModel model, ModelEventArgs e);
         void carSelected(IModel model, ModelEventArgs e);
         void carsAdded(IModel model, ModelEventArgs e);
+        void carMoved(IModel model, ModelEventArgs e);
 
     }
 }

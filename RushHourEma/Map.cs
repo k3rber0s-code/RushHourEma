@@ -68,7 +68,11 @@ namespace RushHourEma
             {
                 var car = GetCarByID(id);
                 Cars.Remove(car);
+                if(IsValidMove(car, direction))
+                {
                 car.Move(direction, this);
+
+                }
                 Cars.Add(car);
                 return car;
             }
@@ -77,14 +81,22 @@ namespace RushHourEma
                 throw new NullReferenceException();
             }
         }
+        bool IsValidMove(Car car, Direction direction)
+        {
+            if (direction == Direction.UP && car.CarOrientation == Orientation.VERTICAL
+                || direction == Direction.DOWN && car.CarOrientation == Orientation.VERTICAL
+                || direction == Direction.LEFT && car.CarOrientation == Orientation.HORIZONTAL
+                || direction == Direction.RIGHT && car.CarOrientation == Orientation.HORIZONTAL)
+            {
+                return true;
+            }
+            else return false;
+        }
         public Car GetCarByID(string id)
         {
             return Cars.Find(x => x.Id == id);
         }
-        public void OnEntityMoved(string id, int xPos, int yPos)
-        {
-            CarMoved?.Invoke(id, xPos, yPos);
-        }
+
 
         public Map Reset()
         {

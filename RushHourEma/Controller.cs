@@ -30,19 +30,25 @@ namespace RushHourEma
             //do something
             //model.increment();
         }
-        public void KeyPressed(KeyPressEventArgs e)
+        public void KeyPressed(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 'w')
             {
+                model.MoveCar(Direction.UP);
             }
             else if (e.KeyChar == 'a')
             {
+                model.MoveCar(Direction.LEFT);
             }
             else if (e.KeyChar == 's')
             {
+                model.MoveCar(Direction.DOWN);
+
             }
             else if (e.KeyChar == 'd')
             {
+                model.MoveCar(Direction.RIGHT);
+
             }
             else if (e.KeyChar == 'l')
             {
@@ -62,4 +68,5 @@ namespace RushHourEma
             model.GetCarFromID(id);
         }
     }
+    
 }

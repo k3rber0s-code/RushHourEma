@@ -17,6 +17,7 @@ namespace RushHourEma
         public PictureBox newpb;
         public List<Car> newcars;
         public int newMapSize;
+        public Point newLocation;
         
         public ModelEventArgs(int v)
         {
@@ -31,15 +32,20 @@ namespace RushHourEma
             newcars = cars;
             newMapSize = mapSize;
         }
+        public ModelEventArgs(Point location)
+        {
+            newLocation = location;
+        }
     }
     public class Model : IModel
     {
         public event ModelHandler<Model> changedValue;
         public event ModelHandler<Model> changedColor;
         public event ModelHandler<Model> carsAdded;
+        public event ModelHandler<Model> carMoved;
 
         int value;
-        Car selectedCar;
+        public Car selectedCar;
         string selectedCarID; // Change to Car type? TODO
         Map map;
 
@@ -69,6 +75,7 @@ namespace RushHourEma
             changedValue += new ModelHandler<Model>(imo.valueIncremented);
             changedColor += new ModelHandler<Model>(imo.carSelected);
             carsAdded += new ModelHandler<Model>(imo.carsAdded);
+            carMoved += new ModelHandler<Model>(imo.carMoved);
         }
         public void AddCars()
         {
@@ -83,6 +90,13 @@ namespace RushHourEma
         public List<Car> ReturnCars()
         {
             return map.Cars;
+        }
+
+        public void MoveCar(Direction direction)
+        {
+            var newCar = map.MoveCar(selectedCar.Id, direction);
+            carMoved.Invoke(this, new ModelEventArgs(new Point(newCar.XPos, newCar.YPos)));
+
         }
     }
 }
