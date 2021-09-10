@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace RushHourEma
 {
-   // public delegate void CarPosition(string id, int xPos, int yPos);
     public class Map
     {
         public Car selectedCar;
@@ -140,7 +139,7 @@ namespace RushHourEma
             }
             else
             {
-                throw new NullReferenceException();
+                throw new NullReferenceException(); //TODO
             }
         }
         private bool IsValidMove(Car car, Direction direction)

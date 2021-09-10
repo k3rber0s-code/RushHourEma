@@ -8,6 +8,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RushHourEma.Properties;
 
 namespace RushHourEma
 {
@@ -18,6 +19,7 @@ namespace RushHourEma
         {
             controller = cont;
         }
+
         public Dictionary<PictureBox, string> Dictionary;
         public List<PictureBox> PictureBoxes;
         public Dictionary<PictureBox, int[]> Walls;

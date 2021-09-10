@@ -22,7 +22,7 @@ namespace RushHourEma.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace RushHourEma.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RushHourEma.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace RushHourEma.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,51 @@ namespace RushHourEma.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MAP_DEFINITION_START
+        ///name=ChillaxSS
+        ///size=10
+        ///exit=3
+        ///cars=13,1,2,0;43,2,1,1;67,2,1,0
+        ///MAP_DEFINITION_END.
+        /// </summary>
+        public static string _3 {
+            get {
+                return ResourceManager.GetString("_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAP_DEFINITION_START
+        ///name=ChillaxSS
+        ///size=10
+        ///exit=3
+        ///cars=13,1,2,0;43,2,1,1;67,2,1,0
+        ///MAP_DEFINITION_END.
+        /// </summary>
+        public static string _4 {
+            get {
+                return ResourceManager.GetString("_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAP_DEFINITION_START
+        ///name=ChillaxSS
+        ///size=10
+        ///exit=3
+        ///cars=13,1,2,0;43,2,1,1;67,2,1,0
+        ///MAP_DEFINITION_END.
+        /// </summary>
+        public static string _5 {
+            get {
+                return ResourceManager.GetString("_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap asphalt {
+        public static System.Drawing.Bitmap asphalt {
             get {
                 object obj = ResourceManager.GetObject("asphalt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +115,7 @@ namespace RushHourEma.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap box {
+        public static System.Drawing.Bitmap box {
             get {
                 object obj = ResourceManager.GetObject("box", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +125,7 @@ namespace RushHourEma.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap horizontalcar {
+        public static System.Drawing.Bitmap horizontalcar {
             get {
                 object obj = ResourceManager.GetObject("horizontalcar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -91,9 +133,37 @@ namespace RushHourEma.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MAP_DEFINITION_START
+        ///name=ChillaxSS
+        ///size=10
+        ///exit=3
+        ///cars=14,1,3,0;13,2,1,1;67,3,1,0
+        ///MAP_DEFINITION_END.
+        /// </summary>
+        public static string level1 {
+            get {
+                return ResourceManager.GetString("level1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAP_DEFINITION_START
+        ///name=Level 2
+        ///size=10
+        ///exit=7
+        ///cars=43,1,2,0;67,2,1,1;13,2,1,0
+        ///MAP_DEFINITION_END.
+        /// </summary>
+        public static string level2 {
+            get {
+                return ResourceManager.GetString("level2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap policehorizontal {
+        public static System.Drawing.Bitmap policehorizontal {
             get {
                 object obj = ResourceManager.GetObject("policehorizontal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +173,7 @@ namespace RushHourEma.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap policevertical {
+        public static System.Drawing.Bitmap policevertical {
             get {
                 object obj = ResourceManager.GetObject("policevertical", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +183,7 @@ namespace RushHourEma.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap stone {
+        public static System.Drawing.Bitmap stone {
             get {
                 object obj = ResourceManager.GetObject("stone", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,7 +193,7 @@ namespace RushHourEma.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap verticalcar {
+        public static System.Drawing.Bitmap verticalcar {
             get {
                 object obj = ResourceManager.GetObject("verticalcar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));

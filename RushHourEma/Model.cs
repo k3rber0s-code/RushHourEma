@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -68,16 +70,10 @@ namespace RushHourEma
             AddMaps();
             currentMapPath = levelPaths[levelCounter];
             map = Map.LoadLevelFromFile(currentMapPath);
+            
+
         }
-        // Set value function to set the value in case if the user directly changes the value
-        // in the textbox and the view change event fires in the controller
 
-        // Change the value and fire the event with the new value inside ModelEventArgs
-        // This will invoke the function valueIncremented in the model and will be displayed
-        // in the textbox subsequently
-
-        // Attach the function which is implementing the IModelObserver so that it can be
-        // notified when a value is changed
         public void Attach(IModelObserver imo)
         {
             carsAdded += new ModelHandler<Model>(imo.carsAdded);
@@ -133,9 +129,10 @@ namespace RushHourEma
 
         public void AddMaps()
         {
+            
             levelCounter = 0;
             levelPaths = new string[5];
-            levelPaths[0] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\1.txt");
+            levelPaths[0] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\1.txt"); //TODO
             levelPaths[1] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\2.txt");
             levelPaths[2] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\3.txt");
             levelPaths[3] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\4.txt");
