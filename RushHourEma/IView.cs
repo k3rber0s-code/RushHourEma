@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace RushHourEma
 {
@@ -17,5 +18,6 @@ namespace RushHourEma
         event ViewHandler<IView> changed;
         void SetController(IController cont);
         void AddCar(Car car, bool bringToFront = false);
+        void AddWalls(Vector2 exitLocation);
     }
 }

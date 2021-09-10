@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,14 +16,16 @@ namespace RushHourEma
         public readonly string MapName;
         public readonly string FileName;
         public readonly int MapSize;
+        public readonly Vector2 ExitPosition;
         public List<Car> Cars;
         public bool[,] FreeFields;
 
-        public Map(string fileName, string mapName, int mapSize, List<string> carDescriptions)
+        public Map(string fileName, string mapName, int mapSize, List<string> carDescriptions, int exitPosition)
         {
             FileName = fileName;
             MapName = mapName;
             MapSize = mapSize;
+            ExitPosition = new Vector2(exitPosition / mapSize, exitPosition % mapSize);
             SetupCars(mapSize, carDescriptions);
             SetupFreeFields();
         }
@@ -43,13 +46,14 @@ namespace RushHourEma
             }
             var mapName = lines["name"];
             var mapSize = int.Parse(lines["size"]);
+            var exitPosition = int.Parse(lines["exit"]);
             List<string> carDescriptions = new List<string>();
             foreach (var val in lines["cars"].Split(";"))
             {
                 carDescriptions.Add(val);
             }
 
-            return new Map(fileName, mapName, mapSize, carDescriptions);
+            return new Map(fileName, mapName, mapSize, carDescriptions, exitPosition);
         }
         private void SetupCars(int mapSize, List<string> carDescriptions)
         {
@@ -63,7 +67,7 @@ namespace RushHourEma
 
                 Cars.Add(new Car(position / mapSize, position % mapSize, width, height, isGoalCar));
             }
-         
+
         }
 
         private void SetupFreeFields()
@@ -73,7 +77,14 @@ namespace RushHourEma
             {
                 for (int j = 0; j < MapSize; j++)
                 {
-                    FreeFields[i, j] = true;
+                    if ((i == 0 || j == 0 || i == MapSize - 1 || j == MapSize - 1) && !(i == ExitPosition.X && j == ExitPosition.Y))
+                    {
+                        FreeFields[i, j] = false;
+                    }
+                    else
+                    {
+                        FreeFields[i, j] = true;
+                    }
                 }
             }
             foreach (Car car in Cars)
@@ -95,11 +106,30 @@ namespace RushHourEma
             }
         }
 
+        internal bool CheckForWin()
+        {
+            foreach(Car car in Cars)
+            {
+                bool check1 = (car.XPos == ExitPosition.X && car.YPos == ExitPosition.Y);
+                bool check2 = (car.CarOrientation == Orientation.HORIZONTAL && (car.XPos+1 == ExitPosition.X && car.YPos == ExitPosition.Y));
+                bool check3 = (car.CarOrientation == Orientation.VERTICAL && (car.XPos == ExitPosition.X && car.YPos + 1 == ExitPosition.Y));
+                if (car.IsGoalCar 
+                    && (check1 || check2 || check3))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
         public Car MoveCar(string id, Direction direction)
         {
             if (GetCarByID(id) != null)
             {
-
                 var car = GetCarByID(id);
                 Cars.Remove(car);
                 if (IsValidMove(car, direction))
@@ -118,7 +148,7 @@ namespace RushHourEma
         private bool IsValidMove(Car car, Direction direction)
         {
             return CheckDirectionValidity(car, direction);
-            
+
 
         }
         private void UpdateFreeFields(Car car)

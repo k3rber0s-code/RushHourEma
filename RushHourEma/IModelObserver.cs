@@ -10,6 +10,7 @@
         void carSelected(IModel model, ModelEventArgs e);
         void carsAdded(IModel model, ModelEventArgs e);
         void carMoved(IModel model, ModelEventArgs e);
+        void gameOver(IModel model, ModelEventArgs e);
 
     }
 }

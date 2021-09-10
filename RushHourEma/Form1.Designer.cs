@@ -34,7 +34,7 @@ namespace RushHourEma
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.Text = "Rush Hour";
             this.Load += new System.EventHandler(this.Window_Load);
             this.ResizeEnd += new System.EventHandler(this.Window_Resize);
 

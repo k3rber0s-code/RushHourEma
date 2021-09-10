@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +19,9 @@ namespace RushHourEma
         public List<Car> newcars;
         public int newMapSize;
         public Point newLocation;
+        public Vector2 newExitPosition;
+        public bool isGameOver;
+
 
         public ModelEventArgs(int v)
         {
@@ -27,14 +31,19 @@ namespace RushHourEma
         {
             newpb = pb;
         }
-        public ModelEventArgs(List<Car> cars, int mapSize)
+        public ModelEventArgs(List<Car> cars, int mapSize, Vector2 exitPosition)
         {
             newcars = cars;
             newMapSize = mapSize;
+            newExitPosition = exitPosition;
         }
         public ModelEventArgs(Point location)
         {
             newLocation = location;
+        }
+        public ModelEventArgs(bool isOver)
+        {
+            isGameOver = isOver;
         }
     }
     public class Model : IModel
@@ -43,6 +52,7 @@ namespace RushHourEma
         public event ModelHandler<Model> changedColor; //OUT
         public event ModelHandler<Model> carsAdded;
         public event ModelHandler<Model> carMoved;
+        public event ModelHandler<Model> gameOver;
 
         int value;
         public Car selectedCar;
@@ -76,10 +86,13 @@ namespace RushHourEma
             changedColor += new ModelHandler<Model>(imo.carSelected);
             carsAdded += new ModelHandler<Model>(imo.carsAdded);
             carMoved += new ModelHandler<Model>(imo.carMoved);
+            gameOver += new ModelHandler<Model>(imo.gameOver);
+
+
         }
         public void AddCars()
         {
-            carsAdded.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize));
+            carsAdded.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize, this.map.ExitPosition));
         }
 
         public void SelectCar(string ID)
@@ -101,6 +114,11 @@ namespace RushHourEma
             {
                 var newCar = map.MoveCar(selectedCar.Id, direction);
                 carMoved.Invoke(this, new ModelEventArgs(new Point(newCar.XPos, newCar.YPos)));
+                bool isOver = map.CheckForWin();
+                if(isOver)
+                {
+                    gameOver.Invoke(this, new ModelEventArgs(isOver));
+                }
             }
 
         }
