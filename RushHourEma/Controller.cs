@@ -17,19 +17,11 @@ namespace RushHourEma
             model = m;
             view.SetController(this);
             model.attach((IModelObserver)view);
-            view.changed += new ViewHandler<IView>(this.view_changed);
+            //view.changed += new ViewHandler<IView>(this.view_changed);
             StartGame();
         }
-        public void view_changed(IView v, ViewEventArgs e)
-        {
-            model.setvalue(e.value);
-        }
-        public void ChangeValue()
-        {
-            model.ChangeValue();
-            //do something
-            //model.increment();
-        }
+
+
         public void KeyPressed(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 'w')
@@ -50,14 +42,15 @@ namespace RushHourEma
                 model.MoveCar(Direction.RIGHT);
 
             }
-            else if (e.KeyChar == 'l')
+            else if (e.KeyChar == 'h')
             {
+                view.ShowHelp();
             }
             else if (e.KeyChar == 'r')
             {
                 model.ResetMap();
             }
-            //CheckIfWon() ? isOver = true : isOver = false;
+            
         }
         public void StartGame()
         {

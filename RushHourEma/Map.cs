@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace RushHourEma
 {
-    public delegate void CarPosition(string id, int xPos, int yPos);
+   // public delegate void CarPosition(string id, int xPos, int yPos);
     public class Map
     {
-        public event CarPosition CarMoved;
         public Car selectedCar;
         public readonly string MapName;
         public readonly string FileName;

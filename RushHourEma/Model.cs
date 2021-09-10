@@ -48,53 +48,45 @@ namespace RushHourEma
     }
     public class Model : IModel
     {
-        public event ModelHandler<Model> changedValue;
-        public event ModelHandler<Model> changedColor; //OUT
         public event ModelHandler<Model> carsAdded;
         public event ModelHandler<Model> carMoved;
         public event ModelHandler<Model> gameOver;
+        public event ModelHandler<Model> mapReseted;
 
-        int value;
-        public Car selectedCar;
-        string selectedCarID; // Change to Car type? TODO OUT
+
+        string[] levelPaths;
+        string currentMapPath;
+        int levelCounter;
+
+        Car selectedCar;
         Map map;
 
-        // implementation of IModel interface set the initial value to 0
         public Model()
         {
-            map = Map.LoadLevelFromFile(@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\default.txt");
+            AddMaps();
+            currentMapPath = levelPaths[levelCounter];
+            map = Map.LoadLevelFromFile(currentMapPath);
         }
         // Set value function to set the value in case if the user directly changes the value
         // in the textbox and the view change event fires in the controller
-        public void setvalue(int v)
-        {
-            value = v;
-        }
+
         // Change the value and fire the event with the new value inside ModelEventArgs
         // This will invoke the function valueIncremented in the model and will be displayed
         // in the textbox subsequently
-        public void ChangeValue()
-        {
-            value += 30;
-            changedValue.Invoke(this, new ModelEventArgs(value));
-        }
+
         // Attach the function which is implementing the IModelObserver so that it can be
         // notified when a value is changed
         public void attach(IModelObserver imo)
         {
-            changedValue += new ModelHandler<Model>(imo.valueIncremented);
-            changedColor += new ModelHandler<Model>(imo.carSelected);
             carsAdded += new ModelHandler<Model>(imo.carsAdded);
             carMoved += new ModelHandler<Model>(imo.carMoved);
             gameOver += new ModelHandler<Model>(imo.gameOver);
-
-
+            mapReseted += new ModelHandler<Model>(imo.mapReseted);
         }
         public void AddCars()
         {
             carsAdded.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize, this.map.ExitPosition));
         }
-
         public void SelectCar(string ID)
         {
             selectedCar = map.GetCarByID(ID);
@@ -103,11 +95,6 @@ namespace RushHourEma
         {
             return map.GetCarByID(ID);
         }
-        public List<Car> ReturnCars()
-        {
-            return map.Cars;
-        }
-
         public void MoveCar(Direction direction)
         {
             if (selectedCar != null)
@@ -117,15 +104,29 @@ namespace RushHourEma
                 bool isOver = map.CheckForWin();
                 if(isOver)
                 {
+                    levelCounter++;
                     gameOver.Invoke(this, new ModelEventArgs(isOver));
+
                 }
             }
 
         }
-
         public void ResetMap()
         {
-            throw new NotImplementedException();
+            map = Map.LoadLevelFromFile(currentMapPath);
+            mapReseted.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize, this.map.ExitPosition));
+
+        }
+
+        public void AddMaps()
+        {
+            levelCounter = 0;
+            levelPaths = new string[5];
+            levelPaths[0] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\1.txt");
+            levelPaths[1] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\2.txt");
+            levelPaths[2] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\3.txt");
+            levelPaths[3] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\4.txt");
+            levelPaths[4] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\5.txt");
         }
     }
 }

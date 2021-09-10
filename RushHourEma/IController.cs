@@ -9,7 +9,6 @@ namespace RushHourEma
 {
     public interface IController
     {
-        void ChangeValue();
         void StartGame();
         void SelectCar(string id);
         void KeyPressed(object sender, KeyPressEventArgs e);

@@ -14,18 +14,14 @@ namespace RushHourEma
     public partial class Form1 : Form, IView, IModelObserver
     {
         IController controller;
-        public event ViewHandler<IView> changed;
         // View will set the associated controller, this is how view is linked to the controller.
         public void SetController(IController cont)
         {
             controller = cont;
         }
-        public Game game; // OUT
-        public Dictionary<PictureBox, string> dictionary;
+        public Dictionary<PictureBox, string> Dictionary;
         public List<PictureBox> PictureBoxes;
         public Dictionary<PictureBox, int[]> Walls;
-        string text; // OUT
-        PictureBox selectedPB; // OUT
         PictureBox selectedPictureBox;
 
         Color bgdColor = Color.AntiqueWhite;
@@ -41,17 +37,34 @@ namespace RushHourEma
             set { squareSize = value; }
         }
 
-
-
+        #region LOADING GAME
         public Form1()
         {
-            dictionary = new Dictionary<PictureBox, string>();
+            Dictionary = new Dictionary<PictureBox, string>();
             Walls = new Dictionary<PictureBox, int[]>();
             PictureBoxes = new List<PictureBox>();
             InitializeComponent();
             Width = 800;
             Height = 825;
         }
+        private void Window_Load(object sender, EventArgs e)
+        {
+            BackColor = bgdColor;
+            //BackgroundImage = Properties.Resources.asphalt1;
+            BackgroundImageLayout = ImageLayout.Tile;
+            MaximizeBox = false;
+            this.KeyPress += controller.KeyPressed;
+
+            ShowHelp();
+        }
+        void IView.ShowHelp()
+        {
+            string message = "Welcome to Rush Hour!\nGet the Police out before it's too late!\nSelect car with mouse, move with WASD.\nTo see this box again, press F1.";
+            string title = "GAMEPLAY";
+            MessageBox.Show(message, title);
+        }
+        #endregion
+        #region ADDING CARS AND WALLS
         public void AddCar(Car car, bool bringToFront)
         {
             var newBox = new PictureBox();
@@ -61,7 +74,7 @@ namespace RushHourEma
             newBox.Location = new Point(car.XPos * SquareSize, car.YPos * SquareSize);
             newBox.Top = car.YPos * SquareSize;
 
-            if(car.IsGoalCar)
+            if (car.IsGoalCar)
             {
                 if (car.CarOrientation == Orientation.HORIZONTAL)
                 {
@@ -76,7 +89,7 @@ namespace RushHourEma
             }
             else
             {
-                if(car.CarOrientation == Orientation.HORIZONTAL)
+                if (car.CarOrientation == Orientation.HORIZONTAL)
                 {
                     newBox.Image = Properties.Resources.horizontalcar;
                 }
@@ -89,7 +102,7 @@ namespace RushHourEma
                 //newBox.BackColor = baseColor;
             }
 
-            dictionary.Add(newBox, car.Id);
+            Dictionary.Add(newBox, car.Id);
             PictureBoxes.Add(newBox);
 
             newBox.MouseClick += NewBox_MouseClick;
@@ -117,43 +130,27 @@ namespace RushHourEma
                         newBox.Image = Properties.Resources.box;
                         this.Controls.Add(newBox);
                         PictureBoxes.Add(newBox);
-                        dictionary.Add(newBox, "wall");
+                        Dictionary.Add(newBox, "wall");
                         Walls.Add(newBox, new int[2] { i, j });
 
                     }
                 }
             }
         }
+        #endregion
+        #region MOUSECLICK REGISTER
         private void NewBox_MouseClick(object sender, MouseEventArgs e)
         {
             if (selectedPictureBox != null) selectedPictureBox.BackColor = Color.Transparent; // de-highlight current
             selectedPictureBox = sender as PictureBox;
             selectedPictureBox.BackColor = highlightColor;
-            //controller.ChangeValue();
 
             string id = GetCarIDFromPB(sender as PictureBox);
             controller.SelectCar(id);
 
-            //ShowMessage(id);
-
         }
-
-        private string GetCarIDFromPB(PictureBox pictureBox)
-        {
-            return dictionary[pictureBox];
-        }
-
-        private void ShowHelp()
-        {
-            string message = "move - WASD\nload map - L\nreset map - R\nhelp - F1";
-            string title = "Key Bindings";
-            MessageBox.Show(message, title);
-        }
-        private void ShowMessage(string message)
-        {
-            string title = "title";
-            MessageBox.Show(message, title);
-        }
+        #endregion
+        #region WINDOW RESIZING
         private void Window_Resize(object sender, EventArgs e)
         {
             Width = Height - 25;
@@ -162,7 +159,6 @@ namespace RushHourEma
                 ResizePictureBox(pb); //TODO - needs to be more efficient. Dock? Set proportions?
             }
         }
-
         private void ResizePictureBox(PictureBox pb)
         {
             if (GetCarIDFromPB(pb) != "wall")
@@ -182,25 +178,14 @@ namespace RushHourEma
                 pb.Top = Walls[pb][1] * SquareSize;
             }
         }
+        #endregion
 
-        private void Window_Load(object sender, EventArgs e)
+        private string GetCarIDFromPB(PictureBox pictureBox)
         {
-            BackColor = bgdColor;
-            //BackgroundImage = Properties.Resources.asphalt1;
-            BackgroundImageLayout = ImageLayout.Tile;
-            //game = new Game();
-            MaximizeBox = false;
-            this.KeyPress += controller.KeyPressed;
-
-            //ShowHelp();
+            return Dictionary[pictureBox];
         }
 
-
-        public void valueIncremented(IModel m, ModelEventArgs e)
-        {
-            text = "" + e.newval;
-            MessageBox.Show(text);
-        }
+        #region EVENTS FROM MODEL
         public void carSelected(IModel m, ModelEventArgs e)
         {
         }
@@ -208,6 +193,21 @@ namespace RushHourEma
         {
             mapSize = e.newMapSize;
             AddWalls(e.newExitPosition);
+            foreach (Car car in e.newcars)
+            {
+                AddCar(car, false);
+            }
+        }
+        public void mapReseted(IModel m, ModelEventArgs e)
+        {
+            foreach (var pb in PictureBoxes)
+            {
+                if (Dictionary[pb] != "wall")
+                {
+
+                    pb.Dispose();
+                }
+            }
             foreach (Car car in e.newcars)
             {
                 AddCar(car, false);
@@ -222,5 +222,20 @@ namespace RushHourEma
             string message = "YOU WON";
             ShowMessage(message);
         }
+        #endregion
+        #region MESSAGE BOXES
+        private void ShowHelp()
+        {
+            string message = "Welcome to Rush Hour!\nGet the Police out before it's too late!\nSelect car with mouse, move with WASD.\nTo see this box again, press H.";
+            string title = "GAMEPLAY";
+            MessageBox.Show(message, title);
+        }
+        private void ShowMessage(string message)
+        {
+            string title = "title";
+            MessageBox.Show(message, title);
+        }
+        #endregion
+
     }
 }
