@@ -76,7 +76,7 @@ namespace RushHourEma
 
         // Attach the function which is implementing the IModelObserver so that it can be
         // notified when a value is changed
-        public void attach(IModelObserver imo)
+        public void Attach(IModelObserver imo)
         {
             carsAdded += new ModelHandler<Model>(imo.carsAdded);
             carMoved += new ModelHandler<Model>(imo.carMoved);
@@ -101,7 +101,7 @@ namespace RushHourEma
             {
                 var newCar = map.MoveCar(selectedCar.Id, direction);
                 carMoved.Invoke(this, new ModelEventArgs(new Point(newCar.XPos, newCar.YPos)));
-                bool isOver = map.CheckForWin();
+                bool isOver = map.CheckForWin(selectedCar);
                 if(isOver)
                 {
                     levelCounter++;

@@ -6,7 +6,7 @@ namespace RushHourEma
 {
     public interface IModel
     {
-        void attach(IModelObserver imo);
+        void Attach(IModelObserver imo);
         void SelectCar(string id);
         Car ReturnCarFromID(string id);
         void AddCars();

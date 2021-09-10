@@ -14,7 +14,6 @@ namespace RushHourEma
     public partial class Form1 : Form, IView, IModelObserver
     {
         IController controller;
-        // View will set the associated controller, this is how view is linked to the controller.
         public void SetController(IController cont)
         {
             controller = cont;
@@ -25,7 +24,6 @@ namespace RushHourEma
         PictureBox selectedPictureBox;
 
         Color bgdColor = Color.AntiqueWhite;
-        Color baseColor = Color.Blue;
         Color highlightColor = Color.Yellow;
 
         public int mapSize;
@@ -85,7 +83,6 @@ namespace RushHourEma
                     newBox.Image = Properties.Resources.policevertical;
 
                 }
-                //newBox.BackColor = Color.Yellow;
             }
             else
             {
@@ -99,7 +96,6 @@ namespace RushHourEma
 
                 }
 
-                //newBox.BackColor = baseColor;
             }
 
             Dictionary.Add(newBox, car.Id);
@@ -204,7 +200,7 @@ namespace RushHourEma
             {
                 if (Dictionary[pb] != "wall")
                 {
-
+                    Controls.Remove(pb);
                     pb.Dispose();
                 }
             }
@@ -220,7 +216,8 @@ namespace RushHourEma
         public void gameOver(IModel m, ModelEventArgs e)
         {
             string message = "YOU WON";
-            ShowMessage(message);
+            string title = "GAME OVER";
+            ShowMessage(message, title);
         }
         #endregion
         #region MESSAGE BOXES
@@ -230,9 +227,8 @@ namespace RushHourEma
             string title = "GAMEPLAY";
             MessageBox.Show(message, title);
         }
-        private void ShowMessage(string message)
+        private void ShowMessage(string message, string title)
         {
-            string title = "title";
             MessageBox.Show(message, title);
         }
         #endregion

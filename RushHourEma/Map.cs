@@ -105,9 +105,9 @@ namespace RushHourEma
             }
         }
 
-        internal bool CheckForWin()
+        internal bool CheckForWin(Car car)
         {
-            foreach(Car car in Cars)
+            
             {
                 bool check1 = (car.XPos == ExitPosition.X && car.YPos == ExitPosition.Y);
                 bool check2 = (car.CarOrientation == Orientation.HORIZONTAL && (car.XPos+1 == ExitPosition.X && car.YPos == ExitPosition.Y));
@@ -122,7 +122,6 @@ namespace RushHourEma
                     return false;
                 }
             }
-            return false;
         }
 
         public Car MoveCar(string id, Direction direction)
