@@ -9,9 +9,11 @@ namespace RushHourEma
         void attach(IModelObserver imo);
         void ChangeValue();
         void setvalue(int v);
-        void GetCarFromID(string id);
+        void SelectCar(string id);
+        Car ReturnCarFromID(string id);
         void AddCars();
         void MoveCar(Direction direction);
         List<Car> ReturnCars();
+        void ResetMap();
     }
 }

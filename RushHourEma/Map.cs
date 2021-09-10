@@ -150,47 +150,6 @@ namespace RushHourEma
             }
             else return false;
         }
-        private  bool CheckSpaceAvailability(Car car, Direction direction, Map map)
-        {
-            if (car.CarOrientation == Orientation.HORIZONTAL)
-            {
-                for (int i = 0; i < car.Width; i++)
-                {
-                    map.FreeFields[car.XPos + i, car.YPos] = true;
-                }
-            }
-            else if (car.CarOrientation == Orientation.VERTICAL)
-            {
-                for (int i = 0; i < car.Height; i++)
-                {
-                    map.FreeFields[car.XPos, car.YPos + i] = true;
-                }
-            }
-
-            car.Move(direction, map);
-
-            if (car.CarOrientation == Orientation.HORIZONTAL)
-            {
-                for (int i = 0; i < car.Width; i++)
-                {
-                    if (map.FreeFields[car.XPos + i, car.YPos] == false)
-                    {
-                        return false;
-                    }
-                }
-            }
-            else if (car.CarOrientation == Orientation.VERTICAL)
-            {
-                for (int i = 0; i < car.Height; i++)
-                {
-                    if(map.FreeFields[car.XPos, car.YPos + i] == false)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
 
         public Car GetCarByID(string id)
         {

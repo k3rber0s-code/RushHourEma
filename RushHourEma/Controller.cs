@@ -55,6 +55,7 @@ namespace RushHourEma
             }
             else if (e.KeyChar == 'r')
             {
+                model.ResetMap();
             }
             //CheckIfWon() ? isOver = true : isOver = false;
         }
@@ -65,7 +66,12 @@ namespace RushHourEma
 
         public void SelectCar(string id)
         {
-            model.GetCarFromID(id);
+            model.SelectCar(id);
+        }
+
+        public Car ReturnCarFromID(string id)
+        {
+            return model.ReturnCarFromID(id);
         }
     }
     

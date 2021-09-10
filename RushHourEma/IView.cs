@@ -16,6 +16,6 @@ namespace RushHourEma
     {
         event ViewHandler<IView> changed;
         void SetController(IController cont);
-        void AddEntity(Car car, bool bringToFront = false);
+        void AddCar(Car car, bool bringToFront = false);
     }
 }

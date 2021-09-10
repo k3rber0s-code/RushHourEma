@@ -18,7 +18,7 @@ namespace RushHourEma
         public List<Car> newcars;
         public int newMapSize;
         public Point newLocation;
-        
+
         public ModelEventArgs(int v)
         {
             newval = v;
@@ -40,13 +40,13 @@ namespace RushHourEma
     public class Model : IModel
     {
         public event ModelHandler<Model> changedValue;
-        public event ModelHandler<Model> changedColor;
+        public event ModelHandler<Model> changedColor; //OUT
         public event ModelHandler<Model> carsAdded;
         public event ModelHandler<Model> carMoved;
 
         int value;
         public Car selectedCar;
-        string selectedCarID; // Change to Car type? TODO
+        string selectedCarID; // Change to Car type? TODO OUT
         Map map;
 
         // implementation of IModel interface set the initial value to 0
@@ -65,7 +65,7 @@ namespace RushHourEma
         // in the textbox subsequently
         public void ChangeValue()
         {
-            value+= 30;
+            value += 30;
             changedValue.Invoke(this, new ModelEventArgs(value));
         }
         // Attach the function which is implementing the IModelObserver so that it can be
@@ -82,10 +82,13 @@ namespace RushHourEma
             carsAdded.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize));
         }
 
-        public void GetCarFromID(string ID)
+        public void SelectCar(string ID)
         {
             selectedCar = map.GetCarByID(ID);
-            //changedColor.Invoke(this, new ModelEventArgs());
+        }
+        public Car ReturnCarFromID(string ID)
+        {
+            return map.GetCarByID(ID);
         }
         public List<Car> ReturnCars()
         {
@@ -94,9 +97,17 @@ namespace RushHourEma
 
         public void MoveCar(Direction direction)
         {
-            var newCar = map.MoveCar(selectedCar.Id, direction);
-            carMoved.Invoke(this, new ModelEventArgs(new Point(newCar.XPos, newCar.YPos)));
+            if (selectedCar != null)
+            {
+                var newCar = map.MoveCar(selectedCar.Id, direction);
+                carMoved.Invoke(this, new ModelEventArgs(new Point(newCar.XPos, newCar.YPos)));
+            }
 
+        }
+
+        public void ResetMap()
+        {
+            throw new NotImplementedException();
         }
     }
 }
