@@ -54,7 +54,7 @@ namespace RushHourEma
             newBox.Width = car.Width*SquareSize;
             newBox.Height = car.Height*SquareSize;
             newBox.Location = new Point(car.XPos*SquareSize, car.YPos*SquareSize);
-            newBox.Top = car.YPos;
+            newBox.Top = car.YPos*SquareSize;
             newBox.BackColor = baseColor;
             dictionary.Add(newBox, car.Id);
             newBox.MouseClick += NewBox_MouseClick;

@@ -16,6 +16,7 @@ namespace RushHourEma
         public readonly string FileName;
         public readonly int MapSize;
         public List<Car> Cars;
+        public bool[,] FreeFields;
 
         public Map(string fileName, string mapName, int mapSize, List<string> carDescriptions)
         {
@@ -23,6 +24,7 @@ namespace RushHourEma
             MapName = mapName;
             MapSize = mapSize;
             SetupCars(mapSize, carDescriptions);
+            SetupFreeFields();
         }
         public static Map LoadLevelFromFile(string fileName)
         {
@@ -61,17 +63,49 @@ namespace RushHourEma
 
                 Cars.Add(new Car(position / mapSize, position % mapSize, width, height, isGoalCar));
             }
+         
         }
+
+        private void SetupFreeFields()
+        {
+            FreeFields = new bool[MapSize, MapSize];
+            for (int i = 0; i < MapSize; i++)
+            {
+                for (int j = 0; j < MapSize; j++)
+                {
+                    FreeFields[i, j] = true;
+                }
+            }
+            foreach (Car car in Cars)
+            {
+                if (car.CarOrientation == Orientation.HORIZONTAL)
+                {
+                    for (int i = 0; i < car.Width; i++)
+                    {
+                        FreeFields[car.XPos + i, car.YPos] = false;
+                    }
+                }
+                else if (car.CarOrientation == Orientation.VERTICAL)
+                {
+                    for (int i = 0; i < car.Height; i++)
+                    {
+                        FreeFields[car.XPos, car.YPos + i] = false;
+                    }
+                }
+            }
+        }
+
         public Car MoveCar(string id, Direction direction)
         {
             if (GetCarByID(id) != null)
             {
+
                 var car = GetCarByID(id);
                 Cars.Remove(car);
-                if(IsValidMove(car, direction))
+                if (IsValidMove(car, direction))
                 {
-                car.Move(direction, this);
-
+                    car.Move(direction, this);
+                    UpdateFreeFields(car);
                 }
                 Cars.Add(car);
                 return car;
@@ -81,17 +115,83 @@ namespace RushHourEma
                 throw new NullReferenceException();
             }
         }
-        bool IsValidMove(Car car, Direction direction)
+        private bool IsValidMove(Car car, Direction direction)
+        {
+            return CheckDirectionValidity(car, direction);
+            
+
+        }
+        private void UpdateFreeFields(Car car)
+        {
+            if (car.CarOrientation == Orientation.HORIZONTAL)
+            {
+                for (int i = 0; i < car.Width; i++)
+                {
+                    FreeFields[car.XPos + i, car.YPos] = false;
+                }
+            }
+            else if (car.CarOrientation == Orientation.VERTICAL)
+            {
+                for (int i = 0; i < car.Height; i++)
+                {
+                    FreeFields[car.XPos, car.YPos + i] = false;
+                }
+            }
+        }
+
+        private static bool CheckDirectionValidity(Car car, Direction direction)
         {
             if (direction == Direction.UP && car.CarOrientation == Orientation.VERTICAL
-                || direction == Direction.DOWN && car.CarOrientation == Orientation.VERTICAL
-                || direction == Direction.LEFT && car.CarOrientation == Orientation.HORIZONTAL
-                || direction == Direction.RIGHT && car.CarOrientation == Orientation.HORIZONTAL)
+                            || direction == Direction.DOWN && car.CarOrientation == Orientation.VERTICAL
+                            || direction == Direction.LEFT && car.CarOrientation == Orientation.HORIZONTAL
+                            || direction == Direction.RIGHT && car.CarOrientation == Orientation.HORIZONTAL)
             {
                 return true;
             }
             else return false;
         }
+        private  bool CheckSpaceAvailability(Car car, Direction direction, Map map)
+        {
+            if (car.CarOrientation == Orientation.HORIZONTAL)
+            {
+                for (int i = 0; i < car.Width; i++)
+                {
+                    map.FreeFields[car.XPos + i, car.YPos] = true;
+                }
+            }
+            else if (car.CarOrientation == Orientation.VERTICAL)
+            {
+                for (int i = 0; i < car.Height; i++)
+                {
+                    map.FreeFields[car.XPos, car.YPos + i] = true;
+                }
+            }
+
+            car.Move(direction, map);
+
+            if (car.CarOrientation == Orientation.HORIZONTAL)
+            {
+                for (int i = 0; i < car.Width; i++)
+                {
+                    if (map.FreeFields[car.XPos + i, car.YPos] == false)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else if (car.CarOrientation == Orientation.VERTICAL)
+            {
+                for (int i = 0; i < car.Height; i++)
+                {
+                    if(map.FreeFields[car.XPos, car.YPos + i] == false)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
         public Car GetCarByID(string id)
         {
             return Cars.Find(x => x.Id == id);

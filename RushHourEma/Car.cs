@@ -64,6 +64,21 @@ namespace RushHourEma
             int goalXPos = XPos;
             int goalYPos = YPos;
 
+            if (CarOrientation == Orientation.HORIZONTAL)
+            {
+                for (int i = 0; i < Width; i++)
+                {
+                    map.FreeFields[XPos + i, YPos] = true;
+                }
+            }
+            else if (CarOrientation == Orientation.VERTICAL)
+            {
+                for (int i = 0; i < Height; i++)
+                {
+                    map.FreeFields[XPos, YPos + i] = true;
+                }
+            }
+
             switch (direction)
             {
                 case Direction.UP:
@@ -79,6 +94,29 @@ namespace RushHourEma
                     goalXPos -= 1;
                     break;
             }
+
+            if (CarOrientation == Orientation.HORIZONTAL)
+            {
+                for (int i = 0; i < Width; i++)
+                {
+                    if (map.FreeFields[goalXPos + i, goalYPos] == false)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else if (CarOrientation == Orientation.VERTICAL)
+            {
+                for (int i = 0; i < Height; i++)
+                {
+                    if (map.FreeFields[goalXPos, goalYPos + i] == false)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            
             //var neighbour = map.GetEntityAtPosition(goalXPos, goalYPos);
             //if (neighbour != null && !neighbour.Move(direction, incomingForce - weight + force))
             //{
