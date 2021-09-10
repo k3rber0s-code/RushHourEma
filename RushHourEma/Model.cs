@@ -52,6 +52,8 @@ namespace RushHourEma
         public event ModelHandler<Model> carMoved;
         public event ModelHandler<Model> gameOver;
         public event ModelHandler<Model> mapReseted;
+        public event ModelHandler<Model> levelLoaded;
+
 
 
         string[] levelPaths;
@@ -82,6 +84,7 @@ namespace RushHourEma
             carMoved += new ModelHandler<Model>(imo.carMoved);
             gameOver += new ModelHandler<Model>(imo.gameOver);
             mapReseted += new ModelHandler<Model>(imo.mapReseted);
+            levelLoaded += new ModelHandler<Model>(imo.levelLoaded);
         }
         public void AddCars()
         {
@@ -116,6 +119,16 @@ namespace RushHourEma
             map = Map.LoadLevelFromFile(currentMapPath);
             mapReseted.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize, this.map.ExitPosition));
 
+        }
+        public void LoadLevel()
+        {
+            if(levelCounter < levelPaths.Length)
+            {
+
+            currentMapPath = levelPaths[levelCounter];
+            map = Map.LoadLevelFromFile(currentMapPath);
+            levelLoaded.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize, this.map.ExitPosition));
+            }
         }
 
         public void AddMaps()

@@ -11,7 +11,6 @@
         void carMoved(IModel model, ModelEventArgs e);
         void gameOver(IModel model, ModelEventArgs e);
         void mapReseted(IModel model, ModelEventArgs e);
-
-
+        void levelLoaded(IModel model, ModelEventArgs e);
     }
 }

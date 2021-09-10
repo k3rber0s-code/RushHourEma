@@ -66,6 +66,11 @@ namespace RushHourEma
         {
             return model.ReturnCarFromID(id);
         }
+
+        public void LoadNextLevel()
+        {
+            model.LoadLevel();
+        }
     }
     
 }

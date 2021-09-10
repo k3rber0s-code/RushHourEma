@@ -218,6 +218,23 @@ namespace RushHourEma
             string message = "YOU WON";
             string title = "GAME OVER";
             ShowMessage(message, title);
+            controller.LoadNextLevel();
+        }
+        public void levelLoaded(IModel m, ModelEventArgs e)
+        {
+            foreach (var pb in PictureBoxes)
+            {
+
+                Controls.Remove(pb);
+                pb.Dispose();
+            }
+
+            mapSize = e.newMapSize;
+            AddWalls(e.newExitPosition);
+            foreach (Car car in e.newcars)
+            {
+                AddCar(car, false);
+            }
         }
         #endregion
         #region MESSAGE BOXES
@@ -231,6 +248,8 @@ namespace RushHourEma
         {
             MessageBox.Show(message, title);
         }
+
+
         #endregion
 
     }

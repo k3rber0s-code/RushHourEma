@@ -1,6 +1,6 @@
 ﻿MAP_DEFINITION_START
-name=ChillaxSS
+name=Level 2
 size=10
-exit=3
-cars=13,1,2,0;43,2,1,1;67,2,1,0
+exit=7
+cars=43,1,2,0;67,2,1,1;13,2,1,0
 MAP_DEFINITION_END

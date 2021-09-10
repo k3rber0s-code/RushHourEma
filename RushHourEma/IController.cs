@@ -13,5 +13,6 @@ namespace RushHourEma
         void SelectCar(string id);
         void KeyPressed(object sender, KeyPressEventArgs e);
         Car ReturnCarFromID(string v);
+        void LoadNextLevel();
     }
 }

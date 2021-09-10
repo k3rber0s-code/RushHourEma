@@ -13,5 +13,6 @@ namespace RushHourEma
         void MoveCar(Direction direction);
         void AddMaps();
         void ResetMap();
+        void LoadLevel();
     }
 }
