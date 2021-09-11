@@ -10,7 +10,7 @@ namespace RushHourEma
 {
     public class Map
     {
-        public Car selectedCar;
+        public Car SelectedCar;
         public readonly string MapName;
         public readonly string FileName;
         public readonly int MapSize;
@@ -28,6 +28,9 @@ namespace RushHourEma
             SetupFreeFields();
         }
         public static Map LoadLevelFromFile(string fileName)
+            ///<summary>
+            /// Reads map information from .txt file and constructs a map with such specifications.
+            ///</summary>
         {
             Dictionary<string, string> lines = new Dictionary<string, string>();
             using (var file = new StreamReader(fileName))
@@ -55,6 +58,10 @@ namespace RushHourEma
         }
         private void SetupCars(int mapSize, List<string> carDescriptions)
         {
+            ///<summary>
+            /// Adds cars to the map with data from car description in map file. The description
+            /// is always: "GRID POSITION | CAR WIDTH | CAR LENGHT | IS GOAL CAR".
+            ///</summary>
             Cars = new List<Car>();
             foreach (var description in carDescriptions)
             {
@@ -70,6 +77,10 @@ namespace RushHourEma
 
         private void SetupFreeFields()
         {
+            /// <summary>
+            /// Generates bool grid in map size and marks all car positions (for every
+            /// square they take) as well as wall positions occupied.
+            /// </summary>
             FreeFields = new bool[MapSize, MapSize];
             for (int i = 0; i < MapSize; i++)
             {
@@ -105,6 +116,11 @@ namespace RushHourEma
         }
 
         internal bool CheckForWin(Car car)
+            ///<summary>
+            /// Checks goal car's position with exit position. As goal car is always 2 x 1 or 1 x 2,
+            /// its position towards exit is identical or with 1-field offset. This case cannot appear
+            /// anytime else.
+            ///</summary>
         {
             
             {
@@ -125,6 +141,7 @@ namespace RushHourEma
 
         public Car MoveCar(string id, Direction direction)
         {
+            
             if (GetCarByID(id) != null)
             {
                 var car = GetCarByID(id);
@@ -145,10 +162,11 @@ namespace RushHourEma
         private bool IsValidMove(Car car, Direction direction)
         {
             return CheckDirectionValidity(car, direction);
-
-
         }
         private void UpdateFreeFields(Car car)
+            ///<summary>
+            /// Marks moved car position as occupied in map.
+            ///</summary>
         {
             if (car.CarOrientation == Orientation.HORIZONTAL)
             {
@@ -175,7 +193,10 @@ namespace RushHourEma
             {
                 return true;
             }
-            else return false;
+            else
+            {
+                return false;
+            }
         }
 
         public Car GetCarByID(string id)

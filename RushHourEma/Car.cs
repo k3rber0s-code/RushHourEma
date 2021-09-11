@@ -60,6 +60,10 @@ namespace RushHourEma
 
         }
         public virtual bool Move(Direction direction, Map map)
+            /// <summary>
+            /// Checks potencial space availability and moves car, 
+            /// if there is such free space for it in the map.
+            /// </summary>
         {
             int goalXPos = XPos;
             int goalYPos = YPos;
@@ -103,16 +107,9 @@ namespace RushHourEma
                 }
             }
 
-
-            //var neighbour = map.GetEntityAtPosition(goalXPos, goalYPos);
-            //if (neighbour != null && !neighbour.Move(direction, incomingForce - weight + force))
-            //{
-            //    return false;
-            //}
             xPos = goalXPos;
             yPos = goalYPos;
-            //isOnGoal = map.goals.Find(x => x.xPos == xPos && x.yPos == yPos) != null;
-            //map.OnEntityMoved(this.id, this.xPos, this.yPos);
+
             return true;
 
         }

@@ -125,6 +125,16 @@ namespace RushHourEma.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap exit {
+            get {
+                object obj = ResourceManager.GetObject("exit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap horizontalcar {
             get {
                 object obj = ResourceManager.GetObject("horizontalcar", resourceCulture);
@@ -135,9 +145,9 @@ namespace RushHourEma.Properties {
         /// <summary>
         ///   Looks up a localized string similar to MAP_DEFINITION_START
         ///name=ChillaxSS
-        ///size=10
-        ///exit=3
-        ///cars=14,1,3,0;13,2,1,1;67,3,1,0
+        ///size=8
+        ///exit=24
+        ///cars=9,1,2,0;17,2,1,0;18,2,1,0;41,1,2,0;12,2,1,0;27,1,2,1;35,2,1,0
         ///MAP_DEFINITION_END.
         /// </summary>
         public static string level1 {
@@ -149,9 +159,9 @@ namespace RushHourEma.Properties {
         /// <summary>
         ///   Looks up a localized string similar to MAP_DEFINITION_START
         ///name=Level 2
-        ///size=10
-        ///exit=7
-        ///cars=43,1,2,0;67,2,1,1;13,2,1,0
+        ///size=8
+        ///exit=8
+        ///cars=9,2,1,0;10,3,1,0;11,3,1,0;25,3,1,0;34,2,1,0;49,1,3,0;35,1,3,0;13,1,2,1;21,1,2,0;38,3,1,0
         ///MAP_DEFINITION_END.
         /// </summary>
         public static string level2 {

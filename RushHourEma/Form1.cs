@@ -24,6 +24,7 @@ namespace RushHourEma
         public List<PictureBox> PictureBoxes;
         public Dictionary<PictureBox, int[]> Walls;
         PictureBox selectedPictureBox;
+        Label textLabel;
 
         Color bgdColor = Color.AntiqueWhite;
         Color highlightColor = Color.Yellow;
@@ -130,7 +131,6 @@ namespace RushHourEma
                         PictureBoxes.Add(newBox);
                         Dictionary.Add(newBox, "wall");
                         Walls.Add(newBox, new int[2] { i, j });
-
                     }
                 }
             }
@@ -143,7 +143,7 @@ namespace RushHourEma
             selectedPictureBox = sender as PictureBox;
             selectedPictureBox.BackColor = highlightColor;
 
-            string id = GetCarIDFromPB(sender as PictureBox);
+            string id = GetCarIDFromPB(selectedPictureBox);
             controller.SelectCar(id);
 
         }
@@ -217,19 +217,26 @@ namespace RushHourEma
         }
         public void gameOver(IModel m, ModelEventArgs e)
         {
-            string message = "YOU WON";
-            string title = "GAME OVER";
+            string message = "Level completed!";
+            string title = "";
             ShowMessage(message, title);
+            foreach (var pb in PictureBoxes)
+            {
+                Controls.Remove(pb);
+                pb.Dispose();
+            }
+            PictureBoxes.Clear();
+
             controller.LoadNextLevel();
         }
         public void levelLoaded(IModel m, ModelEventArgs e)
         {
-            foreach (var pb in PictureBoxes)
-            {
+            //foreach (var pb in PictureBoxes)
+            //{
 
-                Controls.Remove(pb);
-                pb.Dispose();
-            }
+            //    Controls.Remove(pb);
+            //    pb.Dispose();
+            //}
 
             mapSize = e.newMapSize;
             AddWalls(e.newExitPosition);
@@ -237,6 +244,7 @@ namespace RushHourEma
             {
                 AddCar(car, false);
             }
+            selectedPictureBox = null;
         }
         #endregion
         #region MESSAGE BOXES

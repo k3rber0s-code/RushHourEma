@@ -70,7 +70,7 @@ namespace RushHourEma
             AddMaps();
             currentMapPath = levelPaths[levelCounter];
             map = Map.LoadLevelFromFile(currentMapPath);
-            
+
 
         }
 
@@ -100,12 +100,12 @@ namespace RushHourEma
             {
                 var newCar = map.MoveCar(selectedCar.Id, direction);
                 carMoved.Invoke(this, new ModelEventArgs(new Point(newCar.XPos, newCar.YPos)));
+
                 bool isOver = map.CheckForWin(selectedCar);
-                if(isOver)
+                if (isOver)
                 {
                     levelCounter++;
                     gameOver.Invoke(this, new ModelEventArgs(isOver));
-
                 }
             }
 
@@ -118,21 +118,21 @@ namespace RushHourEma
         }
         public void LoadLevel()
         {
-            if(levelCounter < levelPaths.Length)
+            selectedCar = null;
+            if (levelCounter < levelPaths.Length)
             {
-
-            currentMapPath = levelPaths[levelCounter];
-            map = Map.LoadLevelFromFile(currentMapPath);
-            levelLoaded.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize, this.map.ExitPosition));
+                currentMapPath = levelPaths[levelCounter];
+                map = Map.LoadLevelFromFile(currentMapPath);
+                levelLoaded.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize, this.map.ExitPosition));
             }
         }
 
         public void AddMaps()
         {
-            
+
             levelCounter = 0;
             levelPaths = new string[5];
-            levelPaths[0] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\1.txt"); //TODO
+            levelPaths[0] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\3.txt"); //TODO
             levelPaths[1] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\2.txt");
             levelPaths[2] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\3.txt");
             levelPaths[3] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\4.txt");
