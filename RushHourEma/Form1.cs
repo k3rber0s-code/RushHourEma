@@ -25,7 +25,6 @@ namespace RushHourEma
         public List<PictureBox> PictureBoxes;
         public Dictionary<PictureBox, int[]> Walls;
         PictureBox selectedPictureBox;
-        Label textLabel;
 
         Color bgdColor = Color.AntiqueWhite;
         Color highlightColor = Color.Yellow;
@@ -84,11 +83,25 @@ namespace RushHourEma
             {
                 if (car.CarOrientation == Orientation.HORIZONTAL)
                 {
-                    newBox.Image = Properties.Resources.policehorizontal;
+                    if (car.Width == 3)
+                    {
+                        newBox.Image = Properties.Resources.policetruckhorizontal;
+                    }
+                    else
+                    {
+                        newBox.Image = Properties.Resources.policehorizontal;
+                    }
                 }
                 else
                 {
-                    newBox.Image = Properties.Resources.policevertical;
+                    if (car.Height == 3)
+                    {
+                        newBox.Image = Properties.Resources.policetruckvertical;
+                    }
+                    else
+                    {
+                        newBox.Image = Properties.Resources.policevertical;
+                    }
 
                 }
             }

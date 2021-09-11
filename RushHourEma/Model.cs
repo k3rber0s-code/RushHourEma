@@ -138,7 +138,7 @@ namespace RushHourEma
         {
             levelCounter = 0;
             levelPaths = new string[5];
-            levelPaths[0] = (@".\maps\1.txt"); //TODO
+            levelPaths[0] = (@".\maps\1.txt"); 
             levelPaths[1] = (@".\maps\2.txt");
             levelPaths[2] = (@".\maps\3.txt");
             levelPaths[3] = (@".\maps\4.txt");

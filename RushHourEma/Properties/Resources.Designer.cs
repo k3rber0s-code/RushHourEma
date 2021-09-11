@@ -65,7 +65,7 @@ namespace RushHourEma.Properties {
         ///name=ChillaxSS
         ///size=10
         ///exit=3
-        ///cars=15,1,2,0;13,2,1,1;67,2,1,0
+        ///cars=15,1,2,0;13,3,1,1;67,2,1,0
         ///MAP_DEFINITION_END.
         /// </summary>
         public static string _3 {
@@ -185,6 +185,26 @@ namespace RushHourEma.Properties {
         public static System.Drawing.Bitmap policehorizontal {
             get {
                 object obj = ResourceManager.GetObject("policehorizontal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap policetruckhorizontal {
+            get {
+                object obj = ResourceManager.GetObject("policetruckhorizontal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap policetruckvertical {
+            get {
+                object obj = ResourceManager.GetObject("policetruckvertical", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

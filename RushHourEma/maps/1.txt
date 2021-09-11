@@ -1,5 +1,5 @@
 ﻿MAP_DEFINITION_START
-name=ChillaxSS
+name=Level 1
 size=8
 exit=24
 cars=9,1,2,0;17,2,1,0;18,2,1,0;41,1,2,0;12,2,1,0;27,1,2,1;35,2,1,0

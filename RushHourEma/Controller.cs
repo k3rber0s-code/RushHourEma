@@ -17,7 +17,6 @@ namespace RushHourEma
             model = m;
             view.SetController(this);
             model.Attach((IModelObserver)view);
-            //view.changed += new ViewHandler<IView>(this.view_changed);
             StartGame();
         }
 
