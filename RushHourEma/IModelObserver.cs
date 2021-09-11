@@ -12,5 +12,7 @@
         void gameOver(IModel model, ModelEventArgs e);
         void mapReseted(IModel model, ModelEventArgs e);
         void levelLoaded(IModel model, ModelEventArgs e);
+        void gameCompleted(IModel model, ModelEventArgs e);
+
     }
 }

@@ -65,7 +65,7 @@ namespace RushHourEma.Properties {
         ///name=ChillaxSS
         ///size=10
         ///exit=3
-        ///cars=13,1,2,0;43,2,1,1;67,2,1,0
+        ///cars=15,1,2,0;13,2,1,1;67,2,1,0
         ///MAP_DEFINITION_END.
         /// </summary>
         public static string _3 {
@@ -143,6 +143,15 @@ namespace RushHourEma.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream horn {
+            get {
+                return ResourceManager.GetStream("horn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MAP_DEFINITION_START
         ///name=ChillaxSS
         ///size=8
@@ -191,11 +200,30 @@ namespace RushHourEma.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream trafficjamsound {
+            get {
+                return ResourceManager.GetStream("trafficjamsound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap stone {
+        public static System.Drawing.Bitmap truckhorizontal {
             get {
-                object obj = ResourceManager.GetObject("stone", resourceCulture);
+                object obj = ResourceManager.GetObject("truckhorizontal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap truckvertical {
+            get {
+                object obj = ResourceManager.GetObject("truckvertical", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

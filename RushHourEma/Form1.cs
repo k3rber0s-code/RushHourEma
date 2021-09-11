@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,13 +55,17 @@ namespace RushHourEma
             //BackgroundImage = Properties.Resources.asphalt1;
             BackgroundImageLayout = ImageLayout.Tile;
             MaximizeBox = false;
+
+            SoundPlayer sp = new SoundPlayer(Resources.trafficjamsound);
+            sp.PlayLooping();
+
             this.KeyPress += controller.KeyPressed;
 
             ShowHelp();
         }
         void IView.ShowHelp()
         {
-            string message = "Welcome to Rush Hour!\nGet the Police out before it's too late!\nSelect car with mouse, move with WASD.\nTo see this box again, press F1.";
+            string message = "Welcome to Rush Hour!\nGet the Police out before it's too late!\nSelect car with mouse, move with WASD.\nReset level with R.\nTo see this box again, press H.";
             string title = "GAMEPLAY";
             MessageBox.Show(message, title);
         }
@@ -91,11 +96,25 @@ namespace RushHourEma
             {
                 if (car.CarOrientation == Orientation.HORIZONTAL)
                 {
-                    newBox.Image = Properties.Resources.horizontalcar;
+                    if (car.Width == 3)
+                    {
+                        newBox.Image = Properties.Resources.truckhorizontal;
+                    }
+                    else
+                    {
+                        newBox.Image = Properties.Resources.horizontalcar;
+                    }
                 }
                 else
                 {
-                    newBox.Image = Properties.Resources.verticalcar;
+                    if (car.Height == 3)
+                    {
+                        newBox.Image = Properties.Resources.truckvertical;
+                    }
+                    else
+                    {
+                        newBox.Image = Properties.Resources.verticalcar;
+                    }
 
                 }
 
@@ -142,10 +161,16 @@ namespace RushHourEma
             if (selectedPictureBox != null) selectedPictureBox.BackColor = Color.Transparent; // de-highlight current
             selectedPictureBox = sender as PictureBox;
             selectedPictureBox.BackColor = highlightColor;
+            // playHornSound(); TODO
 
             string id = GetCarIDFromPB(selectedPictureBox);
             controller.SelectCar(id);
 
+        }
+        private void playHornSound()
+        {
+            SoundPlayer simpleSound = new SoundPlayer(Resources.horn);
+            simpleSound.Play();
         }
         #endregion
         #region WINDOW RESIZING
@@ -198,14 +223,22 @@ namespace RushHourEma
         }
         public void mapReseted(IModel m, ModelEventArgs e)
         {
+            List<PictureBox> newPictureBoxes = new List<PictureBox>();
             foreach (var pb in PictureBoxes)
             {
                 if (Dictionary[pb] != "wall")
                 {
                     Controls.Remove(pb);
                     pb.Dispose();
+                    Dictionary.Remove(pb);
+                }
+                else
+                {
+                    newPictureBoxes.Add(pb);
                 }
             }
+            PictureBoxes = newPictureBoxes;
+
             foreach (Car car in e.newcars)
             {
                 AddCar(car, false);
@@ -229,15 +262,15 @@ namespace RushHourEma
 
             controller.LoadNextLevel();
         }
+        public void gameCompleted(IModel m, ModelEventArgs e)
+        {
+            string message = "Congratulations, game completed! YOU WON.";
+            string title = "";
+            ShowMessage(message, title);
+            Application.Exit();
+        }
         public void levelLoaded(IModel m, ModelEventArgs e)
         {
-            //foreach (var pb in PictureBoxes)
-            //{
-
-            //    Controls.Remove(pb);
-            //    pb.Dispose();
-            //}
-
             mapSize = e.newMapSize;
             AddWalls(e.newExitPosition);
             foreach (Car car in e.newcars)
@@ -250,7 +283,7 @@ namespace RushHourEma
         #region MESSAGE BOXES
         private void ShowHelp()
         {
-            string message = "Welcome to Rush Hour!\nGet the Police out before it's too late!\nSelect car with mouse, move with WASD.\nTo see this box again, press H.";
+            string message = "Welcome to Rush Hour!\nGet the Police out before it's too late!\nSelect car with mouse, move with WASD.\nReset level with R.\nTo see this box again, press H.";
             string title = "GAMEPLAY";
             MessageBox.Show(message, title);
         }

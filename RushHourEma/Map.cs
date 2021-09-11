@@ -56,6 +56,7 @@ namespace RushHourEma
 
             return new Map(fileName, mapName, mapSize, carDescriptions, exitPosition);
         }
+
         private void SetupCars(int mapSize, List<string> carDescriptions)
         {
             ///<summary>

@@ -55,7 +55,7 @@ namespace RushHourEma
         public event ModelHandler<Model> gameOver;
         public event ModelHandler<Model> mapReseted;
         public event ModelHandler<Model> levelLoaded;
-
+        public event ModelHandler<Model> gameCompleted;
 
 
         string[] levelPaths;
@@ -71,7 +71,6 @@ namespace RushHourEma
             currentMapPath = levelPaths[levelCounter];
             map = Map.LoadLevelFromFile(currentMapPath);
 
-
         }
 
         public void Attach(IModelObserver imo)
@@ -81,6 +80,7 @@ namespace RushHourEma
             gameOver += new ModelHandler<Model>(imo.gameOver);
             mapReseted += new ModelHandler<Model>(imo.mapReseted);
             levelLoaded += new ModelHandler<Model>(imo.levelLoaded);
+            gameCompleted += new ModelHandler<Model>(imo.gameCompleted);
         }
         public void AddCars()
         {
@@ -112,6 +112,8 @@ namespace RushHourEma
         }
         public void ResetMap()
         {
+            selectedCar = null;
+
             map = Map.LoadLevelFromFile(currentMapPath);
             mapReseted.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize, this.map.ExitPosition));
 
@@ -125,18 +127,22 @@ namespace RushHourEma
                 map = Map.LoadLevelFromFile(currentMapPath);
                 levelLoaded.Invoke(this, new ModelEventArgs(this.map.Cars, this.map.MapSize, this.map.ExitPosition));
             }
+            else
+            {
+                bool isGameCompleted = true;
+                gameCompleted.Invoke(this, new ModelEventArgs(isGameCompleted));
+            }
         }
 
         public void AddMaps()
         {
-
             levelCounter = 0;
             levelPaths = new string[5];
-            levelPaths[0] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\3.txt"); //TODO
-            levelPaths[1] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\2.txt");
-            levelPaths[2] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\3.txt");
-            levelPaths[3] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\4.txt");
-            levelPaths[4] = (@"C:\Users\toman\source\repos\RushHourEma\RushHourEma\maps\5.txt");
+            levelPaths[0] = (@".\maps\1.txt"); //TODO
+            levelPaths[1] = (@".\maps\2.txt");
+            levelPaths[2] = (@".\maps\3.txt");
+            levelPaths[3] = (@".\maps\4.txt");
+            levelPaths[4] = (@".\maps\5.txt");
         }
     }
 }
